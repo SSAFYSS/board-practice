@@ -1,7 +1,7 @@
-package com.ssafyss.board_practice.domain.user.api;
+package com.ssafyss.board_practice.domain.auth.api;
 
-import com.ssafyss.board_practice.domain.user.exception.DuplicatedEmailException;
-import com.ssafyss.board_practice.domain.user.exception.SignInFailedException;
+import com.ssafyss.board_practice.domain.auth.exception.DuplicatedEmailException;
+import com.ssafyss.board_practice.domain.auth.exception.SignInFailedException;
 import com.ssafyss.board_practice.global.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class UserExceptionHandler {
+public class AuthExceptionHandler {
 
     @ExceptionHandler(DuplicatedEmailException.class)
     public ResponseEntity<?> handleDuplicatedEmailException(DuplicatedEmailException e) {

@@ -6,12 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.ssafyss.board_practice.domain.user.constants.ErrorMessages;
+import com.ssafyss.board_practice.domain.auth.application.AuthServiceImpl;
+import com.ssafyss.board_practice.domain.auth.constants.ErrorMessages;
+import com.ssafyss.board_practice.domain.auth.dto.SignInResponse;
+import com.ssafyss.board_practice.domain.auth.exception.DuplicatedEmailException;
+import com.ssafyss.board_practice.domain.auth.exception.SignInFailedException;
 import com.ssafyss.board_practice.domain.user.dao.UserDao;
-import com.ssafyss.board_practice.domain.user.dto.SignInResponse;
 import com.ssafyss.board_practice.domain.user.entity.User;
-import com.ssafyss.board_practice.domain.user.exception.DuplicatedEmailException;
-import com.ssafyss.board_practice.domain.user.exception.SignInFailedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,17 +22,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-class UserServiceTest {
+class AuthServiceTest {
 
     private UserDao userDao;
     private PasswordEncoder encoder;
-    private UserServiceImpl userService;
+    private AuthServiceImpl userService;
 
     @BeforeEach
     public void setUp() {
         userDao = mock(UserDao.class);
         encoder = mock(PasswordEncoder.class);
-        userService = new UserServiceImpl(userDao, encoder);
+        userService = new AuthServiceImpl(userDao, encoder);
     }
 
     @Test

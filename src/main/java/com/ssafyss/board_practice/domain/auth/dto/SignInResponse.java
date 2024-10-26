@@ -1,4 +1,4 @@
-package com.ssafyss.board_practice.domain.user.dto;
+package com.ssafyss.board_practice.domain.auth.dto;
 
 public class SignInResponse {
     private Long id;

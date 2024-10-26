@@ -1,10 +1,11 @@
-package com.ssafyss.board_practice.domain.user.dto;
+package com.ssafyss.board_practice.domain.auth.dto;
 
-public class SignInRequest {
+public class CreateUserRequest {
     private String email;
+
     private String password;
 
-    public SignInRequest() {
+    public CreateUserRequest() {
 
     }
 
@@ -15,4 +16,5 @@ public class SignInRequest {
     public String getPassword() {
         return password;
     }
+
 }

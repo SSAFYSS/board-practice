@@ -1,21 +1,21 @@
-package com.ssafyss.board_practice.domain.user.application;
+package com.ssafyss.board_practice.domain.auth.application;
 
-import com.ssafyss.board_practice.domain.user.constants.ErrorMessages;
+import com.ssafyss.board_practice.domain.auth.constants.ErrorMessages;
+import com.ssafyss.board_practice.domain.auth.dto.SignInResponse;
+import com.ssafyss.board_practice.domain.auth.exception.DuplicatedEmailException;
+import com.ssafyss.board_practice.domain.auth.exception.SignInFailedException;
 import com.ssafyss.board_practice.domain.user.dao.UserDao;
-import com.ssafyss.board_practice.domain.user.dto.SignInResponse;
 import com.ssafyss.board_practice.domain.user.entity.User;
-import com.ssafyss.board_practice.domain.user.exception.DuplicatedEmailException;
-import com.ssafyss.board_practice.domain.user.exception.SignInFailedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
 
     private final UserDao userDao;
     private final PasswordEncoder encoder;
 
-    public UserServiceImpl(UserDao userDao, PasswordEncoder encoder) {
+    public AuthServiceImpl(UserDao userDao, PasswordEncoder encoder) {
         this.userDao = userDao;
         this.encoder = encoder;
     }
