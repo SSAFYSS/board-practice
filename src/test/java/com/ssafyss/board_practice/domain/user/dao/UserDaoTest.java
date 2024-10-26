@@ -2,6 +2,7 @@ package com.ssafyss.board_practice.domain.user.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.ssafyss.board_practice.domain.user.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,13 @@ class UserDaoTest {
     void insertUserTest() {
         // given
         String email = "test@example.com";
-        userDao.insertUser(email, "password123");
+        String password = "password123";
+        User user = User.builder()
+                .email(email)
+                .password(password)
+                .build();
+
+        userDao.insertUser(user);
         // when
         int count = userDao.countEmail(email);
         // then
@@ -36,6 +43,29 @@ class UserDaoTest {
         int count = userDao.countEmail(email);
         // then
         assertThat(count).isEqualTo(0);
+    }
+
+    @Test
+    @DisplayName("존재하는 유저일 경우 해당 User entity를 반환한다")
+    void returnUserWhenExist() {
+        // given
+        String email = "ssafy@ssafy.com";
+        // when
+        User user = userDao.findByEmail(email);
+        // then
+        assertThat(user).isNotNull();
+        assertThat(user.emailMatches(email)).isTrue();
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 유저일 경우 null을 반환한다")
+    void returnNullWhenExist() {
+        // given
+        String email = "NOT_EXIST_EMAIL";
+        // when
+        User user = userDao.findByEmail(email);
+        // then
+        assertThat(user).isNull();
     }
 
 }
