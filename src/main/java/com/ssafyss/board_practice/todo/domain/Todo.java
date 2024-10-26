@@ -11,6 +11,7 @@ public class Todo {
     private String updateAt;
     private boolean delete;
 
+    public Todo() {}
     public Todo(int id, String userId, String content, boolean completed, String createdAt, String deletedAt,
                 String updateAt, boolean delete) {
         this.id = id;
