@@ -15,13 +15,23 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Todo insert(CreateTodoDto cDto) {
+    public int insert(CreateTodoDto cDto) {
         return todoDao.insert(cDto);
     }
 
     @Override
     public List<Todo> searchAll() {
         return todoDao.searchAll();
+    }
+
+    @Override
+    public int update(UpdateTodoDto uDto) {
+        return todoDao.update(uDto);
+    }
+
+    @Override
+    public int delete(int id) {
+        return todoDao.delete(id);
     }
 
 }

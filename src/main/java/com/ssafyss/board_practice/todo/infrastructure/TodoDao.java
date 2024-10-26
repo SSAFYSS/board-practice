@@ -14,12 +14,17 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface TodoDao {
 
-    @Insert("INSERT INTO todo (userid, content) VALUES (#{userid}, #{content}) ")
+    @Insert("INSERT INTO todo (userId, content) VALUES (#{userId}, #{content}) ")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    public Todo insert(CreateTodoDto cDto);
+    public int insert(CreateTodoDto cDto);
 
     @Select("SELECT * FROM todo")
     public List<Todo> searchAll();
 
+    @Update("UPDATE todo SET completed = #{completed}, updatedAt = now() WHERE id = #{id}")
+    public int update(UpdateTodoDto uDto);
+
+    @Update("UPDATE todo SET deleted = 1, deletedAt = now() WHERE id = #{id}")
+    public int delete(int id);
 
 }

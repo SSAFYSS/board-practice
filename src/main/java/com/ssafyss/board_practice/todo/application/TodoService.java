@@ -5,8 +5,12 @@ import java.util.List;
 
 public interface TodoService {
 
-    public Todo insert(CreateTodoDto cDto);
+    public int insert(CreateTodoDto cDto);
 
     public List<Todo> searchAll();
+
+    public int update(UpdateTodoDto uDto);
+
+    public int delete(int id);
 
 }
