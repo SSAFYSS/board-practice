@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Todo {
 
     private Long id;
+    private Long userId;
     private String content;
     private boolean completed;
     private LocalDateTime createdAt;
@@ -12,7 +13,8 @@ public class Todo {
     private LocalDateTime updatedAt;
     private boolean deleted;
 
-    public Todo(String content) {
+    public Todo(Long userId, String content) {
+        this.userId = userId;
         this.content = content;
         this.completed = false;
         this.deleted = false;
@@ -20,6 +22,10 @@ public class Todo {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public String getContent() {
