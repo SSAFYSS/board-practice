@@ -8,4 +8,6 @@ public interface UserService {
     public boolean checkPassword(String rawPassword, String encodedPassword);
 
     public boolean regist(UserRegistDto user);
+
+    public boolean delete(String email);
 }

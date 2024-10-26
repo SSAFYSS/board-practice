@@ -31,6 +31,17 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    @Override
+    public boolean delete(String email) {
+        int deleted = userDao.delete(email);
+
+        if(deleted > 0) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     @Override
     public boolean checkPassword(String rawPassword, String encodedPassword) {
