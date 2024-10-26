@@ -1,6 +1,6 @@
 package com.ssafyss.board_practice.user.domain;
 
-public class user {
+public class User {
     int id;
     String oauthId;
     String oauthType;
@@ -10,7 +10,7 @@ public class user {
     String deletedAt;
     boolean delete;
 
-    public user(int id, String oauthId, String oauthType, String email, String password, String profileImage,
+    public User(int id, String oauthId, String oauthType, String email, String password, String profileImage,
                 String deletedAt, boolean delete) {
         this.id = id;
         this.oauthId = oauthId;
