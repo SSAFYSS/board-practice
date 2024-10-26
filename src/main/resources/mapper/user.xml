@@ -8,9 +8,15 @@
         where email = #{email};
     </select>
 
-    <insert id="insertUser">
+    <insert id="insertUser" parameterType="com.ssafyss.board_practice.domain.user.entity.User">
         insert into User (email, password)
         values (#{email}, #{password});
     </insert>
+
+    <select id="findByEmail">
+        select *
+        from User
+        where email = #{email}
+    </select>
 
 </mapper>

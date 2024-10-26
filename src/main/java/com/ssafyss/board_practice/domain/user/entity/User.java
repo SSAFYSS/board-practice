@@ -1,7 +1,9 @@
 package com.ssafyss.board_practice.domain.user.entity;
 
 import java.sql.Timestamp;
+import lombok.Builder;
 
+@Builder
 public class User {
     private Long id;
     private String oauthId;
@@ -12,4 +14,16 @@ public class User {
     private Timestamp createdAt;
     private Timestamp deletedAt;
     private boolean deleted;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean emailMatches(String email) {
+        return this.email.equals(email);
+    }
 }

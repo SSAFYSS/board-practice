@@ -42,6 +42,12 @@ dependencies {
 
     //mockito
     testImplementation 'org.mockito:mockito-core'
+
+    // lombok
+    implementation 'org.projectlombok:lombok'
+    annotationProcessor('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+
 }
 
 tasks.named('test') {
