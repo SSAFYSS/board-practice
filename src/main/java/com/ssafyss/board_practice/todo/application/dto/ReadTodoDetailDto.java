@@ -2,14 +2,15 @@ package com.ssafyss.board_practice.todo.application.dto;
 
 import com.ssafyss.board_practice.todo.domain.Todo;
 
-public class ReadTodoDto {
+// TODO 24.10.26 DTO 이름 규칙 및 타입에 대해 논의하고 싶습니다.
+public class ReadTodoDetailDto {
     private Long id;
     private Long userId;
     private String content;
     private boolean completed;
     private boolean deleted;
 
-    public ReadTodoDto(Todo todo) {
+    public ReadTodoDetailDto(Todo todo) {
         this.id = todo.getId();
         this.userId = todo.getUserId();
         this.content = todo.getContent();

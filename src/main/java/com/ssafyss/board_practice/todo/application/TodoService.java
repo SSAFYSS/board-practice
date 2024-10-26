@@ -1,6 +1,7 @@
 package com.ssafyss.board_practice.todo.application;
 
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
+import com.ssafyss.board_practice.todo.application.dto.ReadTodoDetailDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.domain.Todo;
 import com.ssafyss.board_practice.todo.infrastructure.repository.TodoRepository;
@@ -22,9 +23,10 @@ public class TodoService {
         return readTodos.stream().map(ReadTodoDto::new).toList();
     }
 
-    public CreateTodoDto createTodo(Todo todo) {
+    public ReadTodoDetailDto createTodo(CreateTodoDto createTodoDto) {
+        Todo todo = new Todo(createTodoDto.getUserId(), createTodoDto.getContent());
         todoRepository.createTodo(todo);
         final Todo createdTodo = todoRepository.findById(todo.getId());
-        return new CreateTodoDto(createdTodo);
+        return new ReadTodoDetailDto(createdTodo);
     }
 }
