@@ -5,7 +5,7 @@ public interface UserService {
 
     public User login(String email);
 
-    public void logout();
+    public boolean checkPassword(String rawPassword, String encodedPassword);
 
-    boolean checkPassword(String rawPassword, String encodedPassword);
+    public boolean regist(UserRegistDto user);
 }

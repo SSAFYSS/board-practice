@@ -1,6 +1,7 @@
 package com.ssafyss.board_practice.user.presentation;
 
 import com.ssafyss.board_practice.user.application.UserLoginDto;
+import com.ssafyss.board_practice.user.application.UserRegistDto;
 import com.ssafyss.board_practice.user.application.UserService;
 import com.ssafyss.board_practice.user.application.UserServiceImpl;
 import com.ssafyss.board_practice.user.domain.User;
@@ -21,6 +22,15 @@ public class UserController {
 
     public UserController(UserServiceImpl userService){
         this.userService = userService;
+    }
+
+    @PostMapping("/regist")
+    public ResponseEntity<String> regist(@RequestBody UserRegistDto userRegistDto){
+        if(userService.regist(userRegistDto)){
+            return ResponseEntity.ok("회원가입 성공!!!");
+        }else{
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 등록된 이메일입니다!! 다른 이메일로 시도해주세요!!");
+        }
     }
 
     @PostMapping("/login")

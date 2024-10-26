@@ -10,6 +10,7 @@ public class User {
     String deletedAt;
     boolean delete;
 
+    public User() {}
     public User(int id, String oauthId, String oauthType, String email, String password, String profileImage,
                 String deletedAt, boolean delete) {
         this.id = id;

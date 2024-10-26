@@ -15,11 +15,23 @@ public class UserServiceImpl implements UserService{
         passwordEncoder = new BCryptPasswordEncoder();
     }
 
-    public void register(User user) {
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
+    @Override
+    public boolean regist(UserRegistDto userDto) {
+        if (userDao.searchByEmail(userDto.getEmail()) != null) {
+            return false;
+        } else {
+            String hashedPassword = passwordEncoder.encode(userDto.getPassword());
+            User user = new User();
+            user.setEmail(userDto.getEmail());
+            user.setPassword(hashedPassword);
+            user.setProfileImage(userDto.getProfileImage()); // 필요시 추가
 
+            userDao.insert(user);
+            return true;
+        }
     }
+
+
     @Override
     public boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
@@ -30,8 +42,4 @@ public class UserServiceImpl implements UserService{
         return userDao.searchByEmail(email);
     }
 
-    @Override
-    public void logout() {
-
-    }
 }
