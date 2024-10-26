@@ -7,4 +7,10 @@
         from User
         where email = #{email};
     </select>
+
+    <insert id="insertUser">
+        insert into User (email, password)
+        values (#{email}, #{password});
+    </insert>
+
 </mapper>
