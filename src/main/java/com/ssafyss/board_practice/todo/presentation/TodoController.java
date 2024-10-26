@@ -2,6 +2,7 @@ package com.ssafyss.board_practice.todo.presentation;
 
 import com.ssafyss.board_practice.todo.application.CreateTodoDto;
 import com.ssafyss.board_practice.todo.application.TodoService;
+import com.ssafyss.board_practice.todo.application.TodoServiceImpl;
 import com.ssafyss.board_practice.todo.application.UpdateTodoDto;
 import com.ssafyss.board_practice.todo.domain.Todo;
 import java.util.List;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoController {
     private final TodoService todoService;
 
-    public TodoController(TodoService todoService) {
+    public TodoController(TodoServiceImpl todoService) {
         this.todoService = todoService;
     }
 
