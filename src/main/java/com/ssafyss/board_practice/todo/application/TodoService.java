@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface TodoService {
 
-    public Todo insert(Todo todo);
+    public Todo insert(CreateTodoDto cDto);
 
     public List<Todo> searchAll();
 

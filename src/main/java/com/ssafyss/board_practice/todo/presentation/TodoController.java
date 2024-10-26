@@ -1,8 +1,10 @@
 package com.ssafyss.board_practice.todo.presentation;
 
+import com.ssafyss.board_practice.todo.application.CreateTodoDto;
 import com.ssafyss.board_practice.todo.application.TodoService;
 import com.ssafyss.board_practice.todo.domain.Todo;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +25,9 @@ public class TodoController {
     }
 
     @PostMapping
-    public ResponseEntity insert(@RequestBody Todo todo) {
-        Todo insetTodo = todoService.insert(todo);
-        return ResponseEntity.ok(insetTodo);
+    public ResponseEntity insert(@RequestBody CreateTodoDto cDto) {
+        Todo createdTodo = todoService.insert(cDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTodo);
     }
 
     @GetMapping

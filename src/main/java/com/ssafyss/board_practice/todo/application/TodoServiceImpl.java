@@ -15,10 +15,8 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Todo insert(Todo todo) {
-        todo.setCompleted(false);
-        todoDao.insert(todo);
-        return todo;
+    public Todo insert(CreateTodoDto cDto) {
+        return todoDao.insert(cDto);
     }
 
     @Override
