@@ -40,7 +40,7 @@ class AuthServiceTest {
     public void checkEmailDuplicatedEmailTest() {
         // given
         String email = "DUPLICATED_EMAIL";
-        when(userDao.countEmail(email)).thenReturn(1); // 중복된 이메일이 있다고 설정
+        when(userDao.countByEmail(email)).thenReturn(1); // 중복된 이메일이 있다고 설정
 
         // when, then
         DuplicatedEmailException thrown =
@@ -60,7 +60,7 @@ class AuthServiceTest {
                 .email(email)
                 .password(password)
                 .build();
-        when(userDao.countEmail(email)).thenReturn(0);
+        when(userDao.countByEmail(email)).thenReturn(0);
         when(encoder.encode(password)).thenReturn("hashedPassword");
 
         // when
@@ -73,7 +73,7 @@ class AuthServiceTest {
         // given
         String email = "DUPLICATED_EMAIL";
         String password = "password123";
-        when(userDao.countEmail(email)).thenReturn(1);
+        when(userDao.countByEmail(email)).thenReturn(1);
 
         // when, then
         DuplicatedEmailException thrown =

@@ -25,12 +25,12 @@ public class TodoServiceImpl implements TodoService {
                 .userId(request.getUserId())
                 .content(request.getContent())
                 .build();
-        todoDao.insertTodo(todo);
+        todoDao.insert(todo);
     }
 
     @Override
     public List<ReadTodoResponse> readTodos(ReadTodoRequest request) {
-        return todoDao.findTodosByUserId(request.getUserId());
+        return todoDao.findByUserId(request.getUserId());
     }
 
     @Override
@@ -40,6 +40,6 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public void updateTodo(UpdateTodoRequest request) {
-        todoDao.updateTodo(request);
+        todoDao.update(request);
     }
 }

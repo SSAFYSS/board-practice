@@ -22,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void checkEmail(String email) {
-        int count = userDao.countEmail(email);
+        int count = userDao.countByEmail(email);
         if (count >= 1) {
             throw new DuplicatedEmailException(ErrorMessages.EMAIL_DUPLICATED);
         }
@@ -35,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
                 .email(email)
                 .password(password)
                 .build();
-        userDao.insertUser(user);
+        userDao.insert(user);
     }
 
     @Override

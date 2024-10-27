@@ -27,9 +27,9 @@ class UserDaoTest {
                 .password(password)
                 .build();
 
-        userDao.insertUser(user);
+        userDao.insert(user);
         // when
-        int count = userDao.countEmail(email);
+        int count = userDao.countByEmail(email);
         // then
         assertThat(count).isEqualTo(1);
     }
@@ -40,7 +40,7 @@ class UserDaoTest {
         // given
         String email = "NOT_EXIST_EMAIL";
         // when
-        int count = userDao.countEmail(email);
+        int count = userDao.countByEmail(email);
         // then
         assertThat(count).isEqualTo(0);
     }

@@ -3,12 +3,12 @@
 
 <mapper namespace="com.ssafyss.board_practice.domain.todo.dao.TodoDao">
 
-    <insert id="insertTodo" parameterType="com.ssafyss.board_practice.domain.todo.entity.Todo">
+    <insert id="insert" parameterType="com.ssafyss.board_practice.domain.todo.entity.Todo">
         insert into Todo (userId, content)
         values (#{userId}, #{content});
     </insert>
 
-    <select id="findTodosByUserId" resultType="com.ssafyss.board_practice.domain.todo.dto.ReadTodoResponse">
+    <select id="findByUserId" resultType="com.ssafyss.board_practice.domain.todo.dto.ReadTodoResponse">
         select id, userId, content, completed, createdAt, updatedAt
         from Todo
         where userId = #{userId}
@@ -22,7 +22,7 @@
         where id = #{id};
     </update>
 
-    <update id="updateTodo" parameterType="com.ssafyss.board_practice.domain.todo.dto.UpdateTodoRequest">
+    <update id="update" parameterType="com.ssafyss.board_practice.domain.todo.dto.UpdateTodoRequest">
         update Todo
         set content   = #{content},
             updatedAt = now()

@@ -8,11 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface TodoDao {
-    void insertTodo(Todo todo);
+    void insert(Todo todo);
 
-    List<ReadTodoResponse> findTodosByUserId(Long userId);
+    List<ReadTodoResponse> findByUserId(Long userId);
 
     int deleteById(Long id);
 
-    void updateTodo(UpdateTodoRequest request);
+    void update(UpdateTodoRequest request);
 }
