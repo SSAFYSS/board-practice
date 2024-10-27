@@ -1,7 +1,9 @@
 package com.ssafyss.board_practice.domain.todo.entity;
 
 import java.sql.Timestamp;
+import lombok.Builder;
 
+@Builder
 public class Todo {
     private Long id;
     private Long userId;
