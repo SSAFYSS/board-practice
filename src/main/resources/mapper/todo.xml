@@ -8,4 +8,11 @@
         values (#{userId}, #{content});
     </insert>
 
+    <select id="findTodosByUserId" resultType="com.ssafyss.board_practice.domain.todo.dto.ReadTodoResponse">
+        select id, userId, content, completed, createdAt, updatedAt
+        from Todo
+        where userId = #{userId}
+          and deleted != true
+    </select>
+
 </mapper>
