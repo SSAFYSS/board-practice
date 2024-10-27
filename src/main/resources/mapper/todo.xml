@@ -22,4 +22,11 @@
         where id = #{id};
     </update>
 
+    <update id="updateTodo" parameterType="com.ssafyss.board_practice.domain.todo.dto.UpdateTodoRequest">
+        update Todo
+        set content   = #{content},
+            updatedAt = now()
+        where id = #{id};
+    </update>
+
 </mapper>

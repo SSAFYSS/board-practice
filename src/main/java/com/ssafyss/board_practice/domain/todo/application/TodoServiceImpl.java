@@ -5,6 +5,7 @@ import com.ssafyss.board_practice.domain.todo.dto.CreateTodoRequest;
 import com.ssafyss.board_practice.domain.todo.dto.DeleteTodoRequest;
 import com.ssafyss.board_practice.domain.todo.dto.ReadTodoRequest;
 import com.ssafyss.board_practice.domain.todo.dto.ReadTodoResponse;
+import com.ssafyss.board_practice.domain.todo.dto.UpdateTodoRequest;
 import com.ssafyss.board_practice.domain.todo.entity.Todo;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,10 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public void deleteTodo(DeleteTodoRequest request) {
         todoDao.deleteById(request.getId());
+    }
+
+    @Override
+    public void updateTodo(UpdateTodoRequest request) {
+        todoDao.updateTodo(request);
     }
 }

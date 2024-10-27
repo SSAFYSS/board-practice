@@ -1,6 +1,7 @@
 package com.ssafyss.board_practice.domain.todo.dao;
 
 import com.ssafyss.board_practice.domain.todo.dto.ReadTodoResponse;
+import com.ssafyss.board_practice.domain.todo.dto.UpdateTodoRequest;
 import com.ssafyss.board_practice.domain.todo.entity.Todo;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,4 +13,6 @@ public interface TodoDao {
     List<ReadTodoResponse> findTodosByUserId(Long userId);
 
     int deleteById(Long id);
+
+    void updateTodo(UpdateTodoRequest request);
 }
