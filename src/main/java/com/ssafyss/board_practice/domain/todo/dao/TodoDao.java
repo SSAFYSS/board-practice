@@ -10,4 +10,6 @@ public interface TodoDao {
     void insertTodo(Todo todo);
 
     List<ReadTodoResponse> findTodosByUserId(Long userId);
+
+    int deleteById(Long id);
 }

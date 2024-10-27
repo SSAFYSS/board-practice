@@ -15,4 +15,11 @@
           and deleted != true
     </select>
 
+    <update id="deleteById">
+        update Todo
+        set deleted   = true,
+            deletedAt = now()
+        where id = #{id};
+    </update>
+
 </mapper>

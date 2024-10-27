@@ -2,6 +2,7 @@ package com.ssafyss.board_practice.domain.todo.application;
 
 import com.ssafyss.board_practice.domain.todo.dao.TodoDao;
 import com.ssafyss.board_practice.domain.todo.dto.CreateTodoRequest;
+import com.ssafyss.board_practice.domain.todo.dto.DeleteTodoRequest;
 import com.ssafyss.board_practice.domain.todo.dto.ReadTodoRequest;
 import com.ssafyss.board_practice.domain.todo.dto.ReadTodoResponse;
 import com.ssafyss.board_practice.domain.todo.entity.Todo;
@@ -29,5 +30,10 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public List<ReadTodoResponse> readTodos(ReadTodoRequest request) {
         return todoDao.findTodosByUserId(request.getUserId());
+    }
+
+    @Override
+    public void deleteTodo(DeleteTodoRequest request) {
+        todoDao.deleteById(request.getId());
     }
 }
