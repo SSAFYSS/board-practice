@@ -1,67 +1,50 @@
 package com.ssafyss.board_practice.todo.domain;
 
-import java.time.LocalDateTime;
+import com.ssafyss.board_practice.global.entity.BaseTimeEntity;
+import com.ssafyss.board_practice.user.domain.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-public class Todo {
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@EqualsAndHashCode(of = "id", callSuper = false)
+@ToString(exclude = {"user"})
+public class Todo extends BaseTimeEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_todo_user"), nullable = false)
+    private User user;
+
+    @Column(nullable = false, length = 50)
     private String content;
-    private boolean completed;
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
-    private LocalDateTime updatedAt;
-    private boolean deleted;
 
-    public Todo(Long userId, String content) {
-        this.userId = userId;
+    @Column(nullable = false)
+    private boolean completed = false;
+
+    @Column(nullable = false)
+    private boolean deleted = false;
+
+    @Builder
+    public Todo(final User user, final String content) {
+        this.user = user;
         this.content = content;
-        this.completed = false;
-        this.deleted = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "Todo{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", completed=" + completed +
-                ", createdAt=" + createdAt +
-                ", deletedAt=" + deletedAt +
-                ", updatedAt=" + updatedAt +
-                ", deleted=" + deleted +
-                '}';
     }
 }

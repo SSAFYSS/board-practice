@@ -1,75 +1,60 @@
 package com.ssafyss.board_practice.user.domain;
 
-import java.time.LocalDateTime;
+import com.ssafyss.board_practice.global.entity.BaseTimeEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-public class User {
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@EqualsAndHashCode(of = "id", callSuper = false)
+@ToString
+public class User extends BaseTimeEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String oauthId;
     private String oauthType;
-    private String email;
-    private String password;
-    private String profileImage;
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
-    private boolean deleted;
 
-    public User(String oauthId, String oauthType, String email, String password, String profileImage) {
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String name;
+
+    private String profileImage;
+
+    @Column(nullable = false)
+    private boolean deleted = false;
+
+    @Builder
+    public User(
+            final String oauthId,
+            final String oauthType,
+            final String email,
+            final String password,
+            final String name,
+            final String profileImage
+    ) {
         this.oauthId = oauthId;
         this.oauthType = oauthType;
         this.email = email;
         this.password = password;
+        this.name = name;
         this.profileImage = profileImage;
-        this.deleted = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getOauthId() {
-        return oauthId;
-    }
-
-    public String getOauthType() {
-        return oauthType;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getProfileImage() {
-        return profileImage;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", oauthId='" + oauthId + '\'' +
-                ", oauthType='" + oauthType + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", profileImage='" + profileImage + '\'' +
-                ", createdAt=" + createdAt +
-                ", deletedAt=" + deletedAt +
-                ", deleted=" + deleted +
-                '}';
     }
 }
