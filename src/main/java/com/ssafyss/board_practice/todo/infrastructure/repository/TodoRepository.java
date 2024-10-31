@@ -1,14 +1,12 @@
 package com.ssafyss.board_practice.todo.infrastructure.repository;
 
 import com.ssafyss.board_practice.todo.domain.Todo;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Mapper;
+import java.util.Optional;
 
-@Mapper
-public interface TodoRepository {
-    List<Todo> findAllTodo();
-
-    void createTodo(Todo todo);
-
-    Todo findById(Long id);
+public interface TodoRepository extends JpaRepository<Todo, Long> {
+    Optional<Todo> findById(Long id);
+    List<Todo> findAllByDeletedFalse();
 }
