@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafyss.board_practice.domain.todo.dao.TodoDao">
+<mapper namespace="com.ssafyss.board_practice.todo.infrastructure.TodoRepository">
 
-    <insert id="insert" parameterType="com.ssafyss.board_practice.domain.todo.entity.Todo">
+    <insert id="insert" parameterType="com.ssafyss.board_practice.todo.entity.Todo">
         insert into Todo (userId, content)
         values (#{userId}, #{content});
     </insert>
 
-    <select id="findByUserId" resultType="com.ssafyss.board_practice.domain.todo.dto.ReadTodoResponse">
+    <select id="findByUserId" resultType="com.ssafyss.board_practice.todo.dto.ReadTodoResponse">
         select id, userId, content, completed, createdAt, updatedAt
         from Todo
         where userId = #{userId}
@@ -22,7 +22,7 @@
         where id = #{id};
     </update>
 
-    <update id="update" parameterType="com.ssafyss.board_practice.domain.todo.dto.UpdateTodoRequest">
+    <update id="update" parameterType="com.ssafyss.board_practice.todo.dto.UpdateTodoRequest">
         update Todo
         set content   = #{content},
             updatedAt = now()

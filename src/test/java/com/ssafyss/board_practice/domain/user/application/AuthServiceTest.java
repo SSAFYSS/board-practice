@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.ssafyss.board_practice.domain.auth.application.AuthServiceImpl;
-import com.ssafyss.board_practice.domain.auth.constants.ErrorMessages;
-import com.ssafyss.board_practice.domain.auth.dto.SignInResponse;
-import com.ssafyss.board_practice.domain.auth.exception.DuplicatedEmailException;
-import com.ssafyss.board_practice.domain.auth.exception.SignInFailedException;
-import com.ssafyss.board_practice.domain.user.dao.UserDao;
-import com.ssafyss.board_practice.domain.user.entity.User;
+import com.ssafyss.board_practice.auth.application.AuthServiceImpl;
+import com.ssafyss.board_practice.auth.constants.ErrorMessages;
+import com.ssafyss.board_practice.auth.dto.SignInResponse;
+import com.ssafyss.board_practice.auth.exception.DuplicatedEmailException;
+import com.ssafyss.board_practice.auth.exception.SignInFailedException;
+import com.ssafyss.board_practice.user.entity.User;
+import com.ssafyss.board_practice.user.infrastructure.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,15 +24,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 class AuthServiceTest {
 
-    private UserDao userDao;
+    private UserRepository userRepository;
     private PasswordEncoder encoder;
     private AuthServiceImpl userService;
 
     @BeforeEach
     public void setUp() {
-        userDao = mock(UserDao.class);
+        userRepository = mock(UserRepository.class);
         encoder = mock(PasswordEncoder.class);
-        userService = new AuthServiceImpl(userDao, encoder);
+        userService = new AuthServiceImpl(userRepository, encoder);
     }
 
     @Test
@@ -40,7 +40,7 @@ class AuthServiceTest {
     public void checkEmailDuplicatedEmailTest() {
         // given
         String email = "DUPLICATED_EMAIL";
-        when(userDao.countByEmail(email)).thenReturn(1); // 중복된 이메일이 있다고 설정
+        when(userRepository.countByEmail(email)).thenReturn(1); // 중복된 이메일이 있다고 설정
 
         // when, then
         DuplicatedEmailException thrown =
@@ -60,7 +60,7 @@ class AuthServiceTest {
                 .email(email)
                 .password(password)
                 .build();
-        when(userDao.countByEmail(email)).thenReturn(0);
+        when(userRepository.countByEmail(email)).thenReturn(0);
         when(encoder.encode(password)).thenReturn("hashedPassword");
 
         // when
@@ -73,7 +73,7 @@ class AuthServiceTest {
         // given
         String email = "DUPLICATED_EMAIL";
         String password = "password123";
-        when(userDao.countByEmail(email)).thenReturn(1);
+        when(userRepository.countByEmail(email)).thenReturn(1);
 
         // when, then
         DuplicatedEmailException thrown =
@@ -96,7 +96,7 @@ class AuthServiceTest {
                 .build();
 
         // when
-        when(userDao.findByEmail(email)).thenReturn(user);
+        when(userRepository.findByEmail(email)).thenReturn(user);
         when(encoder.matches(password, user.getPassword())).thenReturn(true);
 
         // then
@@ -113,7 +113,7 @@ class AuthServiceTest {
         String password = "password123";
 
         // when
-        when(userDao.findByEmail(email)).thenReturn(null);
+        when(userRepository.findByEmail(email)).thenReturn(null);
 
         // then
         SignInFailedException exception = assertThrows(SignInFailedException.class,
@@ -133,7 +133,7 @@ class AuthServiceTest {
                 .build();
 
         // when
-        when(userDao.findByEmail(email)).thenReturn(user);
+        when(userRepository.findByEmail(email)).thenReturn(user);
         when(encoder.matches(password, user.getPassword())).thenReturn(false);
 
         // then
