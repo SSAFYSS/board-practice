@@ -3,12 +3,13 @@ package com.ssafyss.board_practice.todo.application;
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDetailDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
+import com.ssafyss.board_practice.todo.application.exception.NotFoundTodoException;
 import com.ssafyss.board_practice.todo.domain.Todo;
 import com.ssafyss.board_practice.todo.infrastructure.repository.TodoRepository;
-import java.util.List;
-
+import com.ssafyss.board_practice.user.application.exception.NotFoundUserException;
 import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.repository.UserRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,11 +30,21 @@ public class TodoService {
         return readTodos.stream().map(ReadTodoDto::new).toList();
     }
 
-    public ReadTodoDetailDto createTodo(CreateTodoDto createTodoDto) {
-        User user = userRepository.findById(createTodoDto.getUserId()).orElseThrow();
-        Todo todo = new Todo(user, createTodoDto.getContent());
-        todoRepository.save(todo);
-        final Todo createdTodo = todoRepository.findById(todo.getId()).orElseThrow();
+    public ReadTodoDetailDto createTodo(final CreateTodoDto createTodoDto) {
+        final User user = userRepository.findById(createTodoDto.getUserId())
+                                        .orElseThrow(NotFoundUserException::new);
+        final Long todoId = saveTodo(user, createTodoDto.getContent());
+        final Todo createdTodo = todoRepository.findById(todoId)
+                                               .orElseThrow(NotFoundTodoException::new);
         return new ReadTodoDetailDto(createdTodo);
+    }
+
+    private Long saveTodo(final User user, final String content) {
+        final Todo todo = Todo.builder()
+                              .user(user)
+                              .content(content)
+                              .build();
+        final Todo savedTodo = todoRepository.save(todo);
+        return savedTodo.getId();
     }
 }
