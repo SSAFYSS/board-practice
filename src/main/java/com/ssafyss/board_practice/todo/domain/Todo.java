@@ -30,7 +30,7 @@ public class Todo extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_todo_user"), nullable = false)
+    @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "fk_todo_user"), nullable = false)
     private User user;
 
     @Column(nullable = false, length = 50)
