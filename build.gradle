@@ -37,17 +37,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    //mockito
-    testImplementation 'org.mockito:mockito-core'
-
     // lombok
     implementation 'org.projectlombok:lombok'
     annotationProcessor('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
-
 }
 
 tasks.named('test') {
