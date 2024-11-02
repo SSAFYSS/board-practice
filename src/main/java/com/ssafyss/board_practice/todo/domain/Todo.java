@@ -47,4 +47,12 @@ public class Todo extends BaseTimeEntity {
         this.user = user;
         this.content = content;
     }
+
+    public void updateCompleted() {
+        this.completed = !this.isCompleted();
+    }
+
+    public void updateDeleted() {
+        this.deleted = true;
+    }
 }

@@ -50,4 +50,14 @@ public class TodoService {
         final Todo savedTodo = todoRepository.save(todo);
         return savedTodo.getId();
     }
+
+    public void updateTodo(final Long todoId) {
+        final Todo todo = todoRepository.findById(todoId).orElseThrow(NotFoundTodoException::new);
+        todo.updateCompleted();
+    }
+
+    public void deleteTodo(final Long todoId) {
+        final Todo todo = todoRepository.findById(todoId).orElseThrow(NotFoundTodoException::new);
+        todo.updateDeleted();
+    }
 }
