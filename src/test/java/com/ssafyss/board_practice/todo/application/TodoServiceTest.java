@@ -62,14 +62,17 @@ class TodoServiceTest {
 
     @Test
     void 모든_todo를_조회한다() {
+        // given
+        final Long userId = user.getId();
+
         // when
-        final List<ReadTodoDto> actual = todoService.readAllTodos();
+        final List<ReadTodoDto> actual = todoService.readAllTodos(userId);
 
         // then
         ReadTodoDto actualDto = actual.get(0);
         assertSoftly(softAssertions -> {
             assertThat(actual).isNotNull();
-            assertThat(actual.size()).isEqualTo(3);
+            assertThat(actual.size()).isEqualTo(2);
             // 리스트의 첫번째에 해당하는 객체만 검증
             assertThat(actualDto.id()).isEqualTo(todo1.getId());
             assertThat(actualDto.userId()).isEqualTo(todo1.getUser().getId());
