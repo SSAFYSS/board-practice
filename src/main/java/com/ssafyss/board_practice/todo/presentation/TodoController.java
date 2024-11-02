@@ -7,6 +7,8 @@ import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.presentation.dto.request.CreateTodoRequest;
 import com.ssafyss.board_practice.todo.presentation.dto.response.CreateTodoResponse;
 import com.ssafyss.board_practice.todo.presentation.dto.response.ReadTodoResponse;
+import com.ssafyss.board_practice.user.domain.User;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,18 +27,20 @@ public class TodoController {
     public ResponseEntity<List<ReadTodoResponse>> readAllTodo() {
         final List<ReadTodoDto> readAllTodos = todoService.readAllTodos();
         final List<ReadTodoResponse> response = readAllTodos.stream()
-                                                            .map(ReadTodoResponse::new)
+                                                            .map(ReadTodoResponse::of)
                                                             .toList();
         return ResponseEntity.ok(response);
     }
 
     @PostMapping(value = "/todos")
     public ResponseEntity<CreateTodoResponse> createTodo(
-            @RequestBody final CreateTodoRequest request
+            @RequestBody final CreateTodoRequest request,
+            final HttpSession session
     ) {
-        final CreateTodoDto createTodoDto = new CreateTodoDto(request);
+        final User user = (User) session.getAttribute("userInfo");
+        final CreateTodoDto createTodoDto = CreateTodoDto.of(user.getId(), request);
         final ReadTodoDetailDto todo = todoService.createTodo(createTodoDto);
-        final CreateTodoResponse response = new CreateTodoResponse(todo);
+        final CreateTodoResponse response = CreateTodoResponse.of(todo);
 
         return ResponseEntity.ok(response);
     }

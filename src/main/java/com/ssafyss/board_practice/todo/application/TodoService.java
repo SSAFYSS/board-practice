@@ -27,16 +27,18 @@ public class TodoService {
     @Transactional(readOnly = true)
     public List<ReadTodoDto> readAllTodos() {
         final List<Todo> readTodos = todoRepository.findAllByDeletedFalse();
-        return readTodos.stream().map(ReadTodoDto::new).toList();
+        return readTodos.stream()
+                        .map(ReadTodoDto::of)
+                        .toList();
     }
 
     public ReadTodoDetailDto createTodo(final CreateTodoDto createTodoDto) {
-        final User user = userRepository.findById(createTodoDto.getUserId())
+        final User user = userRepository.findById(createTodoDto.userId())
                                         .orElseThrow(NotFoundUserException::new);
-        final Long todoId = saveTodo(user, createTodoDto.getContent());
+        final Long todoId = saveTodo(user, createTodoDto.content());
         final Todo createdTodo = todoRepository.findById(todoId)
                                                .orElseThrow(NotFoundTodoException::new);
-        return new ReadTodoDetailDto(createdTodo);
+        return ReadTodoDetailDto.from(createdTodo);
     }
 
     private Long saveTodo(final User user, final String content) {
