@@ -13,5 +13,9 @@ public class ReadResponse {
     String content;
     boolean completed;
 
-    public ReadResponse(ReadTodoDto readTodoDto) {}
+    public ReadResponse(ReadTodoDto todo) {
+        this.id = todo.getId();
+        this.content = todo.getContent();
+        this.completed = todo.isCompleted();
+    }
 }

@@ -13,5 +13,9 @@ public class CreateResponse {
     private String content;
     private boolean completed;
 
-    public CreateResponse(ReadTodoDto todo) {}
+    public CreateResponse(ReadTodoDto todo) {
+        this.id = todo.getId();
+        this.content = todo.getContent();
+        this.completed = todo.isCompleted();
+    }
 }

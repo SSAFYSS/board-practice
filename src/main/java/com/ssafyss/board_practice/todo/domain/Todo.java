@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +38,9 @@ public class Todo {
     private boolean completed = false;
 
     @Column(nullable = false)
-    private boolean delete = false;
+    private boolean deleted = false;
+
+    private LocalDateTime lastModifiedAt;
 
     public Todo(User user, String content) {
         this.user = user;
@@ -46,10 +49,12 @@ public class Todo {
 
     public void toggleCompleted() {
         this.completed = !this.completed;
+        this.lastModifiedAt = LocalDateTime.now();
     }
 
     public void toggleDelete() {
-        this.delete = !this.delete;
+        this.deleted = true;
+        this.lastModifiedAt = LocalDateTime.now();
     }
 
 }

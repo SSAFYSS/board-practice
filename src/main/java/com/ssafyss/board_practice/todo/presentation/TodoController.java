@@ -50,7 +50,7 @@ public class TodoController {
         return ResponseEntity.ok(result);
     }
 
-    @DeleteMapping("/{todoID}")
+    @DeleteMapping("/{todoId}")
     public ResponseEntity<ReadResponse> deleteTodo(@PathVariable Long todoId){
         ReadTodoDto readTodo = todoService.deleteTodo(todoId);
         ReadResponse result = new ReadResponse(readTodo);

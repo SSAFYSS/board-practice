@@ -12,5 +12,8 @@ public class CreateTodoDto {
     private long userId;
     private String content;
 
-    public CreateTodoDto(CreateRequest createRequest){}
+    public CreateTodoDto(CreateRequest createRequest){
+        this.content = createRequest.getContent();
+        this.userId = createRequest.getUserId();
+    }
 }

@@ -21,5 +21,4 @@ public class ReadTodoDto {
         this.completed = todo.isCompleted();
     }
 
-    public ReadTodoDto(CreateTodoDto createTodoDto) {}
 }
