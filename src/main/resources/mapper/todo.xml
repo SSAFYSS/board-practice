@@ -8,7 +8,7 @@
         values (#{userId}, #{content});
     </insert>
 
-    <select id="findByUserId" resultType="com.ssafyss.board_practice.todo.dto.ReadTodoResponse">
+    <select id="findByUserId" resultType="com.ssafyss.board_practice.todo.dto.ReadTodoDto">
         select id, userId, content, completed, createdAt, updatedAt
         from Todo
         where userId = #{userId}

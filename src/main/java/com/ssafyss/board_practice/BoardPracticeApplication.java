@@ -4,7 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@MapperScan("com.ssafyss.board_practice.domain.*.dao")
+@MapperScan("com.ssafyss.board_practice.*.infrastructure")
 @SpringBootApplication
 public class BoardPracticeApplication {
 

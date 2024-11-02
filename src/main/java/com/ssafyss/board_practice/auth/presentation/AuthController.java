@@ -6,11 +6,12 @@ import com.ssafyss.board_practice.auth.dto.CheckEmailRequest;
 import com.ssafyss.board_practice.auth.dto.CreateUserRequest;
 import com.ssafyss.board_practice.auth.dto.SignInRequest;
 import com.ssafyss.board_practice.auth.dto.SignInResponse;
-import com.ssafyss.board_practice.global.dto.BaseResponse;
-import org.springframework.http.ResponseEntity;
+import com.ssafyss.board_practice.global.response.ApiResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,25 +24,31 @@ public class AuthController {
     }
 
     @PostMapping("/checkEmail")
-    public ResponseEntity<BaseResponse> checkEmail(@RequestBody CheckEmailRequest request) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse checkEmail(@RequestBody CheckEmailRequest request) {
         authService.checkEmail(request.getEmail());
-        return ResponseEntity.ok(new BaseResponse.Builder()
+        return ApiResponse.builder()
                 .message(SuccessMessages.EMAIL_AVAILABLE)
-                .build());
+                .build();
     }
 
     @PostMapping("/signUp")
-    public ResponseEntity<BaseResponse> signUp(@RequestBody CreateUserRequest request) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse signUp(@RequestBody CreateUserRequest request) {
         authService.signUp(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(new BaseResponse.Builder()
+        return ApiResponse.builder()
                 .message(SuccessMessages.SIGN_UP_SUCCESS)
-                .build());
+                .build();
     }
 
     @PostMapping("/signIn")
-    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest request) {
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse signIn(@RequestBody SignInRequest request) {
         SignInResponse signInResponse = authService.signIn(request.getEmail(), request.getPassword());
-        return ResponseEntity.ok(signInResponse);
+        return ApiResponse.builder()
+                .data(signInResponse)
+                .message(SuccessMessages.SIGN_IN_SUCCESS)
+                .build();
     }
 
 }

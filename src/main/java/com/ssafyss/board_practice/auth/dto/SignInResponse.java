@@ -1,6 +1,8 @@
 package com.ssafyss.board_practice.auth.dto;
 
-public class SignInResponse {
+import com.ssafyss.board_practice.global.response.ResponseDto;
+
+public class SignInResponse implements ResponseDto {
     private Long id;
 
     public Long getId() {
