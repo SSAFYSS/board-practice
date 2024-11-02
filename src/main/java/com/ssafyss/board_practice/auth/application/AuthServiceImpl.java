@@ -6,19 +6,18 @@ import com.ssafyss.board_practice.auth.exception.DuplicatedEmailException;
 import com.ssafyss.board_practice.auth.exception.SignInFailedException;
 import com.ssafyss.board_practice.user.entity.User;
 import com.ssafyss.board_practice.user.infrastructure.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
-
-    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
-        this.userRepository = userRepository;
-        this.encoder = encoder;
-    }
 
     @Override
     public void checkEmail(String email) {
@@ -29,13 +28,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public void signUp(String email, String password) {
         checkEmail(email);
         User user = User.builder()
                 .email(email)
                 .password(password)
                 .build();
-        userRepository.insert(user);
+        userRepository.save(user);
     }
 
     @Override

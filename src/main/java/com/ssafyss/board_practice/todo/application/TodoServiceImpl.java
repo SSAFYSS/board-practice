@@ -1,16 +1,19 @@
 package com.ssafyss.board_practice.todo.application;
 
+import com.ssafyss.board_practice.global.message.ExceptionMessage;
 import com.ssafyss.board_practice.todo.dto.CreateTodoRequest;
 import com.ssafyss.board_practice.todo.dto.DeleteTodoRequest;
-import com.ssafyss.board_practice.todo.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.dto.ReadTodoRequest;
 import com.ssafyss.board_practice.todo.dto.UpdateTodoRequest;
 import com.ssafyss.board_practice.todo.entity.Todo;
+import com.ssafyss.board_practice.todo.exception.TodoNotFoundException;
 import com.ssafyss.board_practice.todo.infrastructure.TodoRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class TodoServiceImpl implements TodoService {
 
     private TodoRepository todoRepository;
@@ -20,26 +23,33 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    @Transactional
     public void createTodo(CreateTodoRequest request) {
         Todo todo = Todo.builder()
                 .userId(request.getUserId())
                 .content(request.getContent())
                 .build();
-        todoRepository.insert(todo);
+        todoRepository.save(todo);
     }
 
     @Override
-    public List<ReadTodoDto> readTodos(ReadTodoRequest request) {
+    public List<Todo> readTodos(ReadTodoRequest request) {
         return todoRepository.findByUserId(request.getUserId());
     }
 
     @Override
-    public void deleteTodo(DeleteTodoRequest request) {
-        todoRepository.deleteById(request.getId());
+    @Transactional
+    public void delete(DeleteTodoRequest request) {
+        Todo todo = todoRepository.findById(request.getId())
+                .orElseThrow(() -> new TodoNotFoundException(ExceptionMessage.NOT_FOUND_TODO.getMessage()));
+        todo.delete();
     }
 
     @Override
-    public void updateTodo(UpdateTodoRequest request) {
-        todoRepository.update(request);
+    @Transactional
+    public void updateContent(UpdateTodoRequest request) {
+        Todo todo = todoRepository.findById(request.getId())
+                .orElseThrow(() -> new TodoNotFoundException(ExceptionMessage.NOT_FOUND_TODO.getMessage()));
+        todo.updateContent(request.getContent());
     }
 }

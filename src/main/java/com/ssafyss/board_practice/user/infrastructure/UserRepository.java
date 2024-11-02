@@ -1,13 +1,14 @@
 package com.ssafyss.board_practice.user.infrastructure;
 
 import com.ssafyss.board_practice.user.entity.User;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@Mapper
-public interface UserRepository {
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
     int countByEmail(String email);
 
-    void insert(User user);
+    User save(User user);
 
     User findByEmail(String email);
 }

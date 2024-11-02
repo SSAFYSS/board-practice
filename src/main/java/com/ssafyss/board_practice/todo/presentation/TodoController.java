@@ -44,7 +44,10 @@ public class TodoController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<ResponseDto> readTodos(@RequestBody ReadTodoRequest request) {
-        List<ReadTodoDto> todos = todoService.readTodos(request);
+        List<ReadTodoDto> todos = todoService.readTodos(request).stream()
+                .filter(todo -> !todo.isDeleted())
+                .map(ReadTodoDto::from)
+                .toList();
 
         return ApiResponse.builder()
                 .data(ReadTodoResponse.builder()
@@ -56,7 +59,7 @@ public class TodoController {
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse deleteTodo(@RequestBody DeleteTodoRequest request) {
-        todoService.deleteTodo(request);
+        todoService.delete(request);
 
         return ApiResponse.builder()
                 .message(SuccessMessage.SUCCESS_TODO_DELETE.getMessage())
@@ -65,9 +68,9 @@ public class TodoController {
 
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse updateTodo(@RequestBody UpdateTodoRequest request) {
-        todoService.updateTodo(request);
-        
+    public ApiResponse updateContent(@RequestBody UpdateTodoRequest request) {
+        todoService.updateContent(request);
+
         return ApiResponse.builder()
                 .message(SuccessMessage.SUCCESS_TODO_UPDATE.getMessage())
                 .build();

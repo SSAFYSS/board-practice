@@ -28,7 +28,7 @@ class UserRepositoryTest {
                 .password(password)
                 .build();
 
-        userRepository.insert(user);
+        userRepository.save(user);
         // when
         int count = userRepository.countByEmail(email);
         // then
