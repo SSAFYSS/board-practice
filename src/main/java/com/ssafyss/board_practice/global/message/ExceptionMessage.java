@@ -16,6 +16,7 @@ public enum ExceptionMessage {
 
     // TODO
     NOT_FOUND_TODO("할 일을 찾을 수 없습니다"),
+    FORBIDDEN_USER_TO_UPDATE_TODO("할 일을 수정/삭제할 권한이 없습니다"),
     BAD_REQUEST_TODO_FIRST_PAGE("첫번째 페이지 입니다"),
     BAD_REQUEST_TODO_LAST_PAGE("마지막 페이지 입니다");
 

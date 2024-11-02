@@ -56,17 +56,21 @@ public class TodoController {
 
     @PatchMapping(value = "/{todoId}")
     public ResponseEntity<Void> updateTodo(
-            @PathVariable(value = "todoId") Long todoId
+            @PathVariable(value = "todoId") Long todoId,
+            final HttpSession session
     ) {
-        todoService.updateTodo(todoId);
+//        final User user = (User) session.getAttribute("userInfo");
+        todoService.updateTodo(1L, todoId);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{todoId}")
     public ResponseEntity<Void> deleteTodo(
-            @PathVariable(value = "todoId") Long todoId
+            @PathVariable(value = "todoId") Long todoId,
+            final HttpSession session
     ) {
-        todoService.deleteTodo(todoId);
+//        final User user = (User) session.getAttribute("userInfo");
+        todoService.deleteTodo(1L, todoId);
         return ResponseEntity.noContent().build();
     }
 }
