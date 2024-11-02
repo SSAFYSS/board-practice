@@ -19,11 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TodoService {
 
-    @Autowired
     private TodoRepository todoRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public TodoService(TodoRepository todoRepository, UserRepository userRepository) {
+        this.todoRepository = todoRepository;
+        this.userRepository = userRepository;
+    }
 
     @Transactional(readOnly = true)
     public List<ReadTodoDto> readAllTodos(final Long userId) {

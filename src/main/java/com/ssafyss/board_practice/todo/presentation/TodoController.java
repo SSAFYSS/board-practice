@@ -27,8 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TodoController {
 
     private static final Logger log = LoggerFactory.getLogger(TodoController.class);
-    @Autowired
+
     private TodoService todoService;
+
+    @Autowired
+    public TodoController(TodoService todoService) {
+        this.todoService = todoService;
+    }
 
     @GetMapping(value = "")
     public ResponseEntity<ReadTodoResponse> readAllTodo(
