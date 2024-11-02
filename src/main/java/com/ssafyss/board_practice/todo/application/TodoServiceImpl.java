@@ -1,12 +1,17 @@
 package com.ssafyss.board_practice.todo.application;
 
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
+import com.ssafyss.board_practice.todo.application.dto.PagingByCursorDto;
+import com.ssafyss.board_practice.todo.application.dto.PagingByOffsetDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.domain.Todo;
 import com.ssafyss.board_practice.todo.infrastructure.TodoRepository;
 import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.UserRepository;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +60,28 @@ public class TodoServiceImpl implements TodoService {
         todoRepository.save(todo);
         Todo updateDto = todoRepository.findById(todo.getId()).orElseThrow();
         ReadTodoDto result = new ReadTodoDto(updateDto);
+        return result;
+    }
+
+    @Override
+    public List<ReadTodoDto> readTodosByOffset(PagingByOffsetDto pagingByOffsetDto) {
+        Pageable pageable = PageRequest.of(pagingByOffsetDto.getPage(), pagingByOffsetDto.getSize());
+        List<Todo> todos = todoRepository.findByUserIdOrderByIdAsc(pagingByOffsetDto.getUserId(), pageable);
+        List<ReadTodoDto> result = todos.stream()
+                .map(ReadTodoDto::new)
+                .toList();
+
+        return result;
+    }
+
+    @Override
+    public List<ReadTodoDto> readTodosByCursor(PagingByCursorDto pagingByCursorDto) {
+        Pageable pageable = PageRequest.of(0, pagingByCursorDto.getSize(), Sort.by("id").ascending());
+        List<Todo> todos = todoRepository.findByUserIdAndIdGreaterThanOrderByIdAsc(pagingByCursorDto.getUserId(), pagingByCursorDto.getId(), pageable);
+        List<ReadTodoDto> result = todos.stream()
+                .map(ReadTodoDto::new)
+                .toList();
+
         return result;
     }
 }

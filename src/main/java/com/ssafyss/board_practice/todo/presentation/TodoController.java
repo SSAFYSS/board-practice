@@ -2,6 +2,8 @@ package com.ssafyss.board_practice.todo.presentation;
 
 import com.ssafyss.board_practice.todo.application.TodoService;
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
+import com.ssafyss.board_practice.todo.application.dto.PagingByCursorDto;
+import com.ssafyss.board_practice.todo.application.dto.PagingByOffsetDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.presentation.dto.request.CreateRequest;
 import com.ssafyss.board_practice.todo.presentation.dto.response.CreateResponse;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -58,4 +61,36 @@ public class TodoController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/paging/offset")
+    public ResponseEntity<List<ReadResponse>> readTodosByOffset(
+            @RequestParam Long userId,
+            @RequestParam int page,
+            @RequestParam int size){
+        PagingByOffsetDto pagingByOffsetDto = new PagingByOffsetDto(userId, page, size);
+        List<ReadTodoDto> readTodos = todoService.readTodosByOffset(pagingByOffsetDto);
+        List<ReadResponse> result = readTodos.stream().map(ReadResponse::new).toList();
+
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/paging/cursor")
+    public ResponseEntity<List<ReadResponse>> readTodosByCursor(
+            @RequestParam Long userId,
+            @RequestParam Long id,
+            @RequestParam int size){
+        PagingByCursorDto pagingByCursorDto = new PagingByCursorDto(userId, id, size);
+        List<ReadTodoDto> readTodos = todoService.readTodosByCursor(pagingByCursorDto);
+        List<ReadResponse> result = readTodos.stream().map(ReadResponse::new).toList();
+
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/make")
+    public ResponseEntity<Void> createTodos(@RequestBody List<CreateRequest> createRequests){
+        List<CreateTodoDto> createTodos = createRequests.stream()
+                                                        .map(CreateTodoDto::new)
+                                                        .toList();
+        createTodos.forEach(todoService::createTodo);
+        return ResponseEntity.ok().build();
+    }
 }
