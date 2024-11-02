@@ -25,8 +25,9 @@ public class TodoService {
     private UserRepository userRepository;
 
     @Transactional(readOnly = true)
-    public List<ReadTodoDto> readAllTodos() {
-        final List<Todo> readTodos = todoRepository.findAllByDeletedFalse();
+    public List<ReadTodoDto> readAllTodos(final Long userId) {
+        userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
+        final List<Todo> readTodos = todoRepository.findAllByUserIdAndDeletedFalse(userId);
         return readTodos.stream()
                         .map(ReadTodoDto::of)
                         .toList();

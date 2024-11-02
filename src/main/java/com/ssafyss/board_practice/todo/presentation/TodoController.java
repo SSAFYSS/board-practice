@@ -24,8 +24,11 @@ public class TodoController {
     private TodoService todoService;
 
     @GetMapping(value = "/todos")
-    public ResponseEntity<List<ReadTodoResponse>> readAllTodo() {
-        final List<ReadTodoDto> readAllTodos = todoService.readAllTodos();
+    public ResponseEntity<List<ReadTodoResponse>> readAllTodo(
+            final HttpSession session
+    ) {
+        final User user = (User) session.getAttribute("userInfo");
+        final List<ReadTodoDto> readAllTodos = todoService.readAllTodos(user.getId());
         final List<ReadTodoResponse> response = readAllTodos.stream()
                                                             .map(ReadTodoResponse::of)
                                                             .toList();
