@@ -1,23 +1,23 @@
 package com.ssafyss.board_practice.user.application;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import com.ssafyss.board_practice.user.infrastructure.UserDao;
+import com.ssafyss.board_practice.user.infrastructure.UserRepository;
 import com.ssafyss.board_practice.user.domain.User;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-    public UserServiceImpl(UserDao userDao){
-        this.userDao = userDao;
+    public UserServiceImpl(UserRepository userRepository){
+        this.userRepository = userRepository;
         passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override
     public boolean regist(UserRegistDto userDto) {
-        if (userDao.searchByEmail(userDto.getEmail()) != null) {
+        if (userRepository.searchByEmail(userDto.getEmail()) != null) {
             return false;
         } else {
             String hashedPassword = passwordEncoder.encode(userDto.getPassword());
@@ -26,14 +26,14 @@ public class UserServiceImpl implements UserService{
             user.setPassword(hashedPassword);
             user.setProfileImage(userDto.getProfileImage()); // 필요시 추가
 
-            userDao.insert(user);
+            userRepository.insert(user);
             return true;
         }
     }
 
     @Override
     public boolean delete(String email) {
-        int deleted = userDao.delete(email);
+        int deleted = userRepository.delete(email);
 
         if(deleted > 0) {
             return true;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User login(String email) {
-        return userDao.searchByEmail(email);
+        return userRepository.searchByEmail(email);
     }
 
 }

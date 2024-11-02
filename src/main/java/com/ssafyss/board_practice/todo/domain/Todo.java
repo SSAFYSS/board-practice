@@ -1,90 +1,55 @@
 package com.ssafyss.board_practice.todo.domain;
 
+import com.ssafyss.board_practice.user.domain.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Entity
+@NoArgsConstructor
+@Getter
+@EqualsAndHashCode(of = "id", callSuper = false)
+@ToString
 public class Todo {
-    private int id;
-    private String userId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", foreignKey = @ForeignKey(name = "fk_todo_user"), nullable = false)
+    private User user;
+
+    @Column(length = 50, nullable = false)
     private String content;
-    private boolean completed;
-    private String createdAt;
-    private String deletedAt;
-    private String updateAt;
-    private boolean delete;
 
-    public Todo() {}
-    public Todo(int id, String userId, String content, boolean completed, String createdAt, String deletedAt,
-                String updateAt, boolean delete) {
-        this.id = id;
-        this.userId = userId;
-        this.content = content;
-        this.completed = completed;
-        this.createdAt = createdAt;
-        this.deletedAt = deletedAt;
-        this.updateAt = updateAt;
-        this.delete = delete;
-    }
+    @Column(nullable = false)
+    private boolean completed = false;
 
-    public int getId() {
-        return id;
-    }
+    @Column(nullable = false)
+    private boolean delete = false;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
+    public Todo(User user, String content) {
+        this.user = user;
         this.content = content;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public void toggleCompleted() {
+        this.completed = !this.completed;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void toggleDelete() {
+        this.delete = !this.delete;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(String deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public String getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(String updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public boolean isDelete() {
-        return delete;
-    }
-
-    public void setDelete(boolean delete) {
-        this.delete = delete;
-    }
 }

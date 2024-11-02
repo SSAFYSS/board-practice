@@ -1,16 +1,14 @@
 package com.ssafyss.board_practice.todo.application;
 
-import com.ssafyss.board_practice.todo.domain.Todo;
+import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
+import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import java.util.List;
 
 public interface TodoService {
 
-    public int insert(CreateTodoDto cDto);
-
-    public List<Todo> searchAll();
-
-    public int update(UpdateTodoDto uDto);
-
-    public int delete(int id);
+    public List<ReadTodoDto> readAllTodos();
+    public ReadTodoDto createTodo(CreateTodoDto createTodoDto);
+    public ReadTodoDto updateTodo(Long id);
+    public ReadTodoDto deleteTodo(Long id);
 
 }
