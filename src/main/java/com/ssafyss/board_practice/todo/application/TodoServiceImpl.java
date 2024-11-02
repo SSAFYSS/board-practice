@@ -1,26 +1,32 @@
 package com.ssafyss.board_practice.todo.application;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafyss.board_practice.global.message.ExceptionMessage;
 import com.ssafyss.board_practice.todo.dto.CreateTodoRequest;
 import com.ssafyss.board_practice.todo.dto.DeleteTodoRequest;
+import com.ssafyss.board_practice.todo.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.dto.ReadTodoRequest;
 import com.ssafyss.board_practice.todo.dto.UpdateTodoRequest;
+import com.ssafyss.board_practice.todo.entity.QTodo;
 import com.ssafyss.board_practice.todo.entity.Todo;
 import com.ssafyss.board_practice.todo.exception.TodoNotFoundException;
 import com.ssafyss.board_practice.todo.infrastructure.TodoRepository;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class TodoServiceImpl implements TodoService {
 
-    private TodoRepository todoRepository;
-
-    public TodoServiceImpl(TodoRepository todoRepository) {
-        this.todoRepository = todoRepository;
-    }
+    private final TodoRepository todoRepository;
+    private final JPAQueryFactory queryFactory;
 
     @Override
     @Transactional
@@ -33,8 +39,24 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<Todo> readTodos(ReadTodoRequest request) {
-        return todoRepository.findByUserId(request.getUserId());
+    public Page<ReadTodoDto> readTodos(ReadTodoRequest request, Pageable pageable) {
+        QTodo todo = QTodo.todo;
+        BooleanBuilder filterBuilder = TodoQueryHelper.createFilterBuilder(request.getUserId(), todo);
+
+        long totalCount = queryFactory.selectFrom(todo)
+                .where(filterBuilder)
+                .fetchCount();
+
+        List<ReadTodoDto> todos = queryFactory.selectFrom(todo)
+                .where(filterBuilder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch()
+                .stream()
+                .map(ReadTodoDto::from)
+                .toList();
+
+        return new PageImpl<>(todos, pageable, totalCount);
     }
 
     @Override

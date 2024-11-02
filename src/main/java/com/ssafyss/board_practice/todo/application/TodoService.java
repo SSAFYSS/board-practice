@@ -2,15 +2,16 @@ package com.ssafyss.board_practice.todo.application;
 
 import com.ssafyss.board_practice.todo.dto.CreateTodoRequest;
 import com.ssafyss.board_practice.todo.dto.DeleteTodoRequest;
+import com.ssafyss.board_practice.todo.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.dto.ReadTodoRequest;
 import com.ssafyss.board_practice.todo.dto.UpdateTodoRequest;
-import com.ssafyss.board_practice.todo.entity.Todo;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TodoService {
     void createTodo(CreateTodoRequest request);
 
-    List<Todo> readTodos(ReadTodoRequest request);
+    Page<ReadTodoDto> readTodos(ReadTodoRequest request, Pageable pageable);
 
     void delete(DeleteTodoRequest request);
 

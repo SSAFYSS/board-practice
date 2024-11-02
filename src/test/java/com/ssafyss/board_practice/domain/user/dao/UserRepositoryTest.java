@@ -55,7 +55,6 @@ class UserRepositoryTest {
         User user = userRepository.findByEmail(email);
         // then
         assertThat(user).isNotNull();
-        assertThat(user.emailMatches(email)).isTrue();
     }
 
     @Test

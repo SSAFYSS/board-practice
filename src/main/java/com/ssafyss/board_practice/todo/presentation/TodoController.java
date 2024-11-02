@@ -10,7 +10,8 @@ import com.ssafyss.board_practice.todo.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.dto.ReadTodoRequest;
 import com.ssafyss.board_practice.todo.dto.ReadTodoResponse;
 import com.ssafyss.board_practice.todo.dto.UpdateTodoRequest;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,11 +44,8 @@ public class TodoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<ResponseDto> readTodos(@RequestBody ReadTodoRequest request) {
-        List<ReadTodoDto> todos = todoService.readTodos(request).stream()
-                .filter(todo -> !todo.isDeleted())
-                .map(ReadTodoDto::from)
-                .toList();
+    public ApiResponse<ResponseDto> readTodos(@RequestBody ReadTodoRequest request, Pageable pageable) {
+        Page<ReadTodoDto> todos = todoService.readTodos(request, pageable);
 
         return ApiResponse.builder()
                 .data(ReadTodoResponse.builder()
