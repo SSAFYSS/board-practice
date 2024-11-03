@@ -1,13 +1,17 @@
 package com.ssafyss.board_practice.todo.presentation;
 
 import com.ssafyss.board_practice.todo.application.TodoService;
+import com.ssafyss.board_practice.todo.application.dto.ReadArticleDto;
 import com.ssafyss.board_practice.todo.presentation.dto.response.ReadArticleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,8 +28,13 @@ public class PagingController {
     }
 
     @GetMapping(value = "/paging/offset")
-    public ResponseEntity<ReadArticleResponse> readByOffset() {
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ReadArticleResponse> readByOffset(
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "0") int page
+    ) {
+        final Pageable pageable = PageRequest.of(page, size);
+        final ReadArticleDto readArticleDto = todoService.readAllTodosByPagingOffset(pageable);
+        final ReadArticleResponse response = ReadArticleResponse.from(readArticleDto);
+        return ResponseEntity.ok(response);
     }
 }

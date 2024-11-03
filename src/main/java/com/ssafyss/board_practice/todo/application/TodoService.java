@@ -1,6 +1,7 @@
 package com.ssafyss.board_practice.todo.application;
 
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
+import com.ssafyss.board_practice.todo.application.dto.ReadArticleDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDetailDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.application.exception.ForbiddenUserToUpdateTodoException;
@@ -12,6 +13,8 @@ import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.repository.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,5 +80,11 @@ public class TodoService {
         final Todo todo = todoRepository.findById(todoId).orElseThrow(NotFoundTodoException::new);
         isValidUserToUpdate(userId, todo.getUser().getId());
         todo.updateDeleted();
+    }
+
+    @Transactional(readOnly = true)
+    public ReadArticleDto readAllTodosByPagingOffset(final Pageable pageable) {
+        final Page<Todo> todos = todoRepository.findAll(pageable);
+        return ReadArticleDto.of(todos.getContent(), todos.getTotalPages());
     }
 }
