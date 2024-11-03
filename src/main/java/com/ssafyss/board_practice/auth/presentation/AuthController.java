@@ -1,11 +1,11 @@
 package com.ssafyss.board_practice.auth.presentation;
 
 import com.ssafyss.board_practice.auth.application.AuthService;
-import com.ssafyss.board_practice.auth.constants.SuccessMessages;
 import com.ssafyss.board_practice.auth.dto.CheckEmailRequest;
 import com.ssafyss.board_practice.auth.dto.CreateUserRequest;
 import com.ssafyss.board_practice.auth.dto.SignInRequest;
 import com.ssafyss.board_practice.auth.dto.SignInResponse;
+import com.ssafyss.board_practice.global.message.SuccessMessage;
 import com.ssafyss.board_practice.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class AuthController {
     public ApiResponse checkEmail(@RequestBody CheckEmailRequest request) {
         authService.checkEmail(request.getEmail());
         return ApiResponse.builder()
-                .message(SuccessMessages.EMAIL_AVAILABLE)
+                .message(SuccessMessage.AVAILABLE_USER_EMAIL.getMessage())
                 .build();
     }
 
@@ -35,7 +35,7 @@ public class AuthController {
     public ApiResponse signUp(@RequestBody CreateUserRequest request) {
         authService.signUp(request.getEmail(), request.getPassword());
         return ApiResponse.builder()
-                .message(SuccessMessages.SIGN_UP_SUCCESS)
+                .message(SuccessMessage.SUCCESS_SIGN_UP.getMessage())
                 .build();
     }
 
@@ -45,7 +45,7 @@ public class AuthController {
         SignInResponse signInResponse = authService.signIn(request.getEmail(), request.getPassword());
         return ApiResponse.builder()
                 .data(signInResponse)
-                .message(SuccessMessages.SIGN_IN_SUCCESS)
+                .message(SuccessMessage.SUCCESS_SIGN_IN.getMessage())
                 .build();
     }
 

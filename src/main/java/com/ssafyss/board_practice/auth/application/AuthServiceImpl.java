@@ -1,9 +1,9 @@
 package com.ssafyss.board_practice.auth.application;
 
-import com.ssafyss.board_practice.auth.constants.ErrorMessages;
 import com.ssafyss.board_practice.auth.dto.SignInResponse;
 import com.ssafyss.board_practice.auth.exception.DuplicatedEmailException;
 import com.ssafyss.board_practice.auth.exception.SignInFailedException;
+import com.ssafyss.board_practice.global.message.ExceptionMessage;
 import com.ssafyss.board_practice.user.entity.User;
 import com.ssafyss.board_practice.user.infrastructure.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
     public void checkEmail(String email) {
         int count = userRepository.countByEmail(email);
         if (count >= 1) {
-            throw new DuplicatedEmailException(ErrorMessages.EMAIL_DUPLICATED);
+            throw new DuplicatedEmailException(ExceptionMessage.CONFLICT_USER_EMAIL.getMessage());
         }
     }
 
@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
     public SignInResponse signIn(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user == null || !encoder.matches(password, user.getPassword())) {
-            throw new SignInFailedException(ErrorMessages.SIGN_IN_FAILED);
+            throw new SignInFailedException(ExceptionMessage.BAD_REQUEST_USER_SIGN_IN.getMessage());
         }
         return new SignInResponse.Builder()
                 .id(user.getId())
