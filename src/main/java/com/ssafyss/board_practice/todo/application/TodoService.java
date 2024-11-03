@@ -1,6 +1,7 @@
 package com.ssafyss.board_practice.todo.application;
 
 import com.ssafyss.board_practice.todo.application.dto.CreateTodoDto;
+import com.ssafyss.board_practice.todo.application.dto.ReadArticleByCursorDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadArticleDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDetailDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadTodoDto;
@@ -86,5 +87,21 @@ public class TodoService {
     public ReadArticleDto readAllTodosByPagingOffset(final Pageable pageable) {
         final Page<Todo> todos = todoRepository.findAll(pageable);
         return ReadArticleDto.of(todos.getContent(), todos.getTotalPages());
+    }
+
+    @Transactional(readOnly = true)
+    public ReadArticleByCursorDto readAllTodosByPagingCursor(
+            final Long cursorId,
+            final Pageable pageable
+    ) {
+        final List<Todo> todos;
+        if (cursorId == null) {
+            todos = todoRepository.findAll(pageable).getContent();
+        } else {
+            todos = todoRepository.findByIdGreaterThan(cursorId, pageable);
+        }
+
+        Long lastCursorId = todos.isEmpty() ? null : todos.get(todos.size() - 1).getId();
+        return ReadArticleByCursorDto.of(lastCursorId, todos);
     }
 }

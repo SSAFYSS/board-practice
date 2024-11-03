@@ -21,4 +21,6 @@ public interface TodoRepository extends JpaRepository<Todo, Long> {
     List<Todo> findAllByUserIdAndDeletedFalse(final Long userId);
 
     Page<Todo> findAll(final Pageable pageable);
+
+    List<Todo> findByIdGreaterThan(final Long id, final Pageable pageable);
 }

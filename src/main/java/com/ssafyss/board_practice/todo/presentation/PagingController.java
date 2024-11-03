@@ -1,7 +1,9 @@
 package com.ssafyss.board_practice.todo.presentation;
 
 import com.ssafyss.board_practice.todo.application.TodoService;
+import com.ssafyss.board_practice.todo.application.dto.ReadArticleByCursorDto;
 import com.ssafyss.board_practice.todo.application.dto.ReadArticleDto;
+import com.ssafyss.board_practice.todo.presentation.dto.response.ReadArticleByCursorResponse;
 import com.ssafyss.board_practice.todo.presentation.dto.response.ReadArticleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,19 @@ public class PagingController {
         final Pageable pageable = PageRequest.of(page, size);
         final ReadArticleDto readArticleDto = todoService.readAllTodosByPagingOffset(pageable);
         final ReadArticleResponse response = ReadArticleResponse.from(readArticleDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "/paging/cursor")
+    public ResponseEntity<ReadArticleByCursorResponse> readByCursor(
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) Long cursorId
+    ) {
+        final Pageable pageable = PageRequest.of(0, size);
+        final ReadArticleByCursorDto readArticlesDto = todoService.readAllTodosByPagingCursor(
+                cursorId, pageable);
+        final ReadArticleByCursorResponse response = ReadArticleByCursorResponse.from(
+                readArticlesDto);
         return ResponseEntity.ok(response);
     }
 }
