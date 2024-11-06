@@ -1,4 +1,4 @@
-package com.ssafyss.board_practice.user.entity;
+package com.ssafyss.board_practice.user.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

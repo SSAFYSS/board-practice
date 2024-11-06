@@ -1,7 +1,7 @@
 package com.ssafyss.board_practice.todo.dto;
 
 import com.ssafyss.board_practice.global.response.ResponseDto;
-import com.ssafyss.board_practice.todo.entity.Todo;
+import com.ssafyss.board_practice.todo.domain.Todo;
 import java.sql.Timestamp;
 import lombok.Builder;
 import lombok.Getter;

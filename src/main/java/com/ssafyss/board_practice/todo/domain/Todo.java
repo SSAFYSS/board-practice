@@ -1,4 +1,4 @@
-package com.ssafyss.board_practice.todo.entity;
+package com.ssafyss.board_practice.todo.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

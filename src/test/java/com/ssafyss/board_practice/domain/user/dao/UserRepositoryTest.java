@@ -2,7 +2,7 @@ package com.ssafyss.board_practice.domain.user.dao;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.ssafyss.board_practice.user.entity.User;
+import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

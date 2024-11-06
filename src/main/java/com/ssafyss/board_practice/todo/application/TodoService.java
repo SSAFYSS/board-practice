@@ -9,9 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface TodoService {
-    void createTodo(CreateTodoRequest request);
+    void create(CreateTodoRequest request);
 
-    Page<ReadTodoDto> readTodos(ReadTodoRequest request, Pageable pageable);
+    Page<ReadTodoDto> read(ReadTodoRequest request, Pageable pageable);
 
     void delete(DeleteTodoRequest request);
 

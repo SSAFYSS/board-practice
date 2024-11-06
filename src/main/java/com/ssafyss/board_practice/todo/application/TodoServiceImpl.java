@@ -3,13 +3,13 @@ package com.ssafyss.board_practice.todo.application;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafyss.board_practice.global.message.ExceptionMessage;
+import com.ssafyss.board_practice.todo.domain.QTodo;
+import com.ssafyss.board_practice.todo.domain.Todo;
 import com.ssafyss.board_practice.todo.dto.CreateTodoRequest;
 import com.ssafyss.board_practice.todo.dto.DeleteTodoRequest;
 import com.ssafyss.board_practice.todo.dto.ReadTodoDto;
 import com.ssafyss.board_practice.todo.dto.ReadTodoRequest;
 import com.ssafyss.board_practice.todo.dto.UpdateTodoRequest;
-import com.ssafyss.board_practice.todo.entity.QTodo;
-import com.ssafyss.board_practice.todo.entity.Todo;
 import com.ssafyss.board_practice.todo.exception.TodoNotFoundException;
 import com.ssafyss.board_practice.todo.infrastructure.TodoRepository;
 import java.util.List;
@@ -30,7 +30,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     @Transactional
-    public void createTodo(CreateTodoRequest request) {
+    public void create(CreateTodoRequest request) {
         Todo todo = Todo.builder()
                 .userId(request.getUserId())
                 .content(request.getContent())
@@ -39,7 +39,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Page<ReadTodoDto> readTodos(ReadTodoRequest request, Pageable pageable) {
+    public Page<ReadTodoDto> read(ReadTodoRequest request, Pageable pageable) {
         QTodo todo = QTodo.todo;
         BooleanBuilder filterBuilder = TodoQueryHelper.createFilterBuilder(request.getUserId(), todo);
 

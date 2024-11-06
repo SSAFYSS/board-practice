@@ -4,7 +4,7 @@ import com.ssafyss.board_practice.auth.dto.SignInResponse;
 import com.ssafyss.board_practice.auth.exception.DuplicatedEmailException;
 import com.ssafyss.board_practice.auth.exception.SignInFailedException;
 import com.ssafyss.board_practice.global.message.ExceptionMessage;
-import com.ssafyss.board_practice.user.entity.User;
+import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -11,7 +11,7 @@ import com.ssafyss.board_practice.auth.constants.ErrorMessages;
 import com.ssafyss.board_practice.auth.dto.SignInResponse;
 import com.ssafyss.board_practice.auth.exception.DuplicatedEmailException;
 import com.ssafyss.board_practice.auth.exception.SignInFailedException;
-import com.ssafyss.board_practice.user.entity.User;
+import com.ssafyss.board_practice.user.domain.User;
 import com.ssafyss.board_practice.user.infrastructure.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

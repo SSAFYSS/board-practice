@@ -34,8 +34,8 @@ public class TodoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse createTodo(@RequestBody CreateTodoRequest request) {
-        todoService.createTodo(request);
+    public ApiResponse create(@RequestBody CreateTodoRequest request) {
+        todoService.create(request);
 
         return ApiResponse.builder()
                 .message(SuccessMessage.SUCCESS_TODO_CREATE.getMessage())
@@ -44,8 +44,8 @@ public class TodoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<ResponseDto> readTodos(@RequestBody ReadTodoRequest request, Pageable pageable) {
-        Page<ReadTodoDto> todos = todoService.readTodos(request, pageable);
+    public ApiResponse<ResponseDto> read(@RequestBody ReadTodoRequest request, Pageable pageable) {
+        Page<ReadTodoDto> todos = todoService.read(request, pageable);
 
         return ApiResponse.builder()
                 .data(ReadTodoResponse.builder()
@@ -56,7 +56,7 @@ public class TodoController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse deleteTodo(@RequestBody DeleteTodoRequest request) {
+    public ApiResponse delete(@RequestBody DeleteTodoRequest request) {
         todoService.delete(request);
 
         return ApiResponse.builder()

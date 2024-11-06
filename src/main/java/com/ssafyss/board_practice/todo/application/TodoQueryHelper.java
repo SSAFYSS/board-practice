@@ -1,7 +1,7 @@
 package com.ssafyss.board_practice.todo.application;
 
 import com.querydsl.core.BooleanBuilder;
-import com.ssafyss.board_practice.todo.entity.QTodo;
+import com.ssafyss.board_practice.todo.domain.QTodo;
 
 public class TodoQueryHelper {
 
